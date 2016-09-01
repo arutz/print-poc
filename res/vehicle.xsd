@@ -1,0 +1,216 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="domainobjects">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="domainobject" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="data">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="_OperationName" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_OperationImplementation" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Instantiation" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_OperationsEnd" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Start" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_End" minOccurs="0"/>
+                    <xs:element name="_Operations" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="_entry">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:byte">
+                                  <xs:attribute type="xs:string" name="referencedobjecttype"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="_MinimumLogLevel" minOccurs="0"/>
+                    <xs:element name="_ReturnValues" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="_entry" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:byte">
+                                  <xs:attribute type="xs:int" name="referencedobjectoid" use="optional"/>
+                                  <xs:attribute type="xs:string" name="referencedobjecttype" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:byte" name="_state" minOccurs="0"/>
+                    <xs:element type="xs:int" name="_oid" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_touched" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Vin" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Lfdnr" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Variante" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Version" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Genehmigungsnr01" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Genehmigungsdat01" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Liste_code" minOccurs="0"/>
+                    <xs:element name="_Liste_code_as_set" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="entry" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="_Produktionsnr" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Tosan_schl" minOccurs="0"/>
+                    <xs:element name="_Client" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:byte">
+                            <xs:attribute type="xs:int" name="referencedobjectoid" use="optional"/>
+                            <xs:attribute type="xs:string" name="referencedobjecttype" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="_Bm_fahrzeug" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Bm_motor" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Lva_id" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Code_lack1" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Stat_1" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Stat_1_notice" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Stat_2" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Stat_3" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Stat_3_notice" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Stat_4" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Stat_4_notice" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Stat_5" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Stat_6" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Stat_7" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Stat_8" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Coc_state" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Man_signature_1_no" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Man_signature_2_no" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Exp_signature_1_no" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Exp_signature_2_no" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Import_date" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Manually_created" minOccurs="0"/>
+                    <xs:element type="xs:short" name="_Masse_berechnet" minOccurs="0"/>
+                    <xs:element type="xs:float" name="_Masse_berechnet_achse_1" minOccurs="0"/>
+                    <xs:element type="xs:float" name="_Masse_berechnet_achse_2" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Ext_object_ident" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_Montagestatus" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_MontagestatusDatum" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_AfabDataTimesamp" minOccurs="0"/>
+                    <xs:element name="_CocSignature1" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:byte">
+                            <xs:attribute type="xs:int" name="referencedobjectoid" use="optional"/>
+                            <xs:attribute type="xs:string" name="referencedobjecttype" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="_UnitedNationsCountryCode" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_MarketingCarlineCode" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_MarketingSeriesCode" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_MarketingBodyStyleCode" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_LanguageCode" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_AssemblyPlantCode" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_EngineeringSeries" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_EngineeringBodyStyle" minOccurs="0"/>
+                    <xs:element type="xs:short" name="_ModelYearName" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_ModelYearSuffix" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_OptionTrimCode" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_MarketingOfferPackageCode" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_PackageVersionID" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_DriveCode" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_NamePlateCode" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_MarketingDivision" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_EngineeringCarline" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_PassedtoSalesTime" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_EngineSerialNumber" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_CodeStage" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_CB_A705ListingNumber" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_CB_A705OrderNumber" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Transmission_Code" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_Engine_Code" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_SstaCounter" minOccurs="0"/>
+                    <xs:element type="xs:float" name="_ListPrice" minOccurs="0"/>
+                    <xs:element name="_NoticeRef" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="_entry" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:byte">
+                                  <xs:attribute type="xs:int" name="referencedobjectoid" use="optional"/>
+                                  <xs:attribute type="xs:string" name="referencedobjecttype" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="_PrintHistoryRef" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="empty" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:byte" name="_EurotaxCode" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_RegistrationAuthorizationLock" minOccurs="0"/>
+                    <xs:element type="xs:float" name="_EndCustomerListPriceIncludingTaxes" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_FrenchPowerFiscal" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_FrenchNumberOfSeats" minOccurs="0"/>
+                    <xs:element type="xs:byte" name="_CountPreviousOwners" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_ClientIdent" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_ClientName" minOccurs="0"/>
+                    <xs:element name="_ClientDepartments" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="_entry" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:byte">
+                                  <xs:attribute type="xs:int" name="referencedobjectoid" use="optional"/>
+                                  <xs:attribute type="xs:string" name="referencedobjecttype" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="_ClientLanguage" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:byte">
+                            <xs:attribute type="xs:int" name="referencedobjectoid" use="optional"/>
+                            <xs:attribute type="xs:string" name="referencedobjecttype" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="_ClientSortField" minOccurs="0"/>
+                    <xs:element type="xs:string" name="_ClientUserVrcLng" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:byte" name="number" use="optional"/>
+            <xs:attribute type="xs:string" name="type" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:byte" name="counter"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
