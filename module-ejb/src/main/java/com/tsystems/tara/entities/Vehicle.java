@@ -1,22 +1,29 @@
 package com.tsystems.tara.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Date;
 import java.util.List;
 
 /**
  * Created by arutz on 19.08.2016.
  */
-@Entity
+@Entity(name = "vehicle")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Vehicle {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
     private int number;
     private String type;
     private int state;
-    private List<String> codeList;
     private int objectId;
     private Date touched;
     private int lfdNr;
@@ -73,14 +80,6 @@ public class Vehicle {
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public List<String> getCodeList() {
-        return codeList;
-    }
-
-    public void setCodeList(List<String> codeList) {
-        this.codeList = codeList;
     }
 
     public int getObjectId() {

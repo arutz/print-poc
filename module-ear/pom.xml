@@ -11,6 +11,7 @@
 
 	<artifactId>module-ear</artifactId>
 	<packaging>ear</packaging>
+    <name>module-ear.ear</name>
 
 	<dependencies>
 		<dependency>
@@ -44,6 +45,33 @@
 					</modules>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install-local</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>uninstall-local</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>undeploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <hostname>${wildfly-hostname}</hostname>
+                    <port>${wildfly-port}</port>
+                    <protocol>http-remoting</protocol>
+                    <username>${wildfly-username}</username>
+                    <password>${wildfly-password}</password>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 

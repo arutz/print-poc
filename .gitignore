@@ -37,3 +37,6 @@ workspace.xml
 *.iml
 /module-web/src/main/webapp/bpmn-js-seed/bower_components/bpmn-js/bower.json
 /module-web/src/main/webapp/bpmn-js-seed/bower_components/bpmn-js/.bower.json
+/module-ear/target
+/module-ejb/target
+/module-web/target
