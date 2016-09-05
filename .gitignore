@@ -40,3 +40,7 @@ workspace.xml
 /module-ear/target
 /module-ejb/target
 /module-web/target
+*.project
+.settings
+*.classpath
+/module-ejb/bin

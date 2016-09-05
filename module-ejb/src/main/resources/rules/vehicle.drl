@@ -1,0 +1,11 @@
+package rules
+ 
+import com.tsystems.tara.entities.Vehicle;
+rule "heavyMotor"
+    when
+        $vehicle : Vehicle( bmMotor == "heavy" );
+    then
+        $vehicle.setMassTire1($vehicle.getMassTire1() + 1.0f);
+        $vehicle.setMassTire2($vehicle.getMassTire2() + 1.0f);
+        return;
+end

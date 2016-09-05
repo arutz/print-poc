@@ -1,9 +1,6 @@
 package com.tsystems.tara.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,10 +10,13 @@ import java.util.List;
 /**
  * Created by arutz on 19.08.2016.
  */
-@Entity(name = "vehicle")
+@Entity(name = "Vehicle")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@Table(name = "Vehicle")
 public class Vehicle {
+
+    public static final String PROP_NAME = "vehicle";
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -256,5 +256,38 @@ public class Vehicle {
 
     public void setEngineSerial(String engineSerial) {
         this.engineSerial = engineSerial;
+    }
+
+    @Transient
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", number=" + number +
+                ", type='" + type + '\'' +
+                ", state=" + state +
+                ", objectId=" + objectId +
+                ", touched=" + touched +
+                ", lfdNr=" + lfdNr +
+                ", variant='" + variant + '\'' +
+                ", approvalNumber='" + approvalNumber + '\'' +
+                ", approvalTime=" + approvalTime +
+                ", productionNumber='" + productionNumber + '\'' +
+                ", clientNumber=" + clientNumber +
+                ", bmVehicle='" + bmVehicle + '\'' +
+                ", bmMotor='" + bmMotor + '\'' +
+                ", lvaId=" + lvaId +
+                ", codeLack='" + codeLack + '\'' +
+                ", stat1=" + stat1 +
+                ", stat0=" + stat0 +
+                ", stat2=" + stat2 +
+                ", stat3=" + stat3 +
+                ", cocState=" + cocState +
+                ", mass=" + mass +
+                ", massTire1=" + massTire1 +
+                ", massTire2=" + massTire2 +
+                ", countryCode='" + countryCode + '\'' +
+                ", engineSerial='" + engineSerial + '\'' +
+                '}';
     }
 }

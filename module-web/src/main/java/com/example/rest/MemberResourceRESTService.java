@@ -3,6 +3,7 @@ package com.example.rest;
 import com.example.service.ExampleService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,6 +14,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+
+import org.camunda.bpm.engine.ProcessEngines;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
 
 
 @Path("/members")
@@ -25,5 +29,14 @@ public class MemberResourceRESTService {
    @GET
    public String listAllMembers() {
       return "ejb call: " + exampleService.whoAmI();
+   }
+   
+   public Collection<String> listDeployments() {
+	   List<ProcessDefinition> list = ProcessEngines.getDefaultProcessEngine().getRepositoryService().createProcessDefinitionQuery().list();
+	   Collection<String> ret = new ArrayList<>();
+	   for(ProcessDefinition process : list) {
+		   ret.add(process.getName());
+	   }
+	   return ret;
    }
 }
