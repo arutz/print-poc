@@ -284,7 +284,7 @@
 		</pluginManagement>
 	</build>
 
-	<!--<scm>
+	<scm>
 		<connection>scm:svn:https://seu41.gdc-leinf01.t-systems.com/repo/TNG/TNC/tara/app/trunk</connection>
 		<developerConnection>scm:svn:https://seu41.gdc-leinf01.t-systems.com/repo/TNG/TNC/tara/app/trunk</developerConnection>
 	</scm>
@@ -320,6 +320,6 @@
 			<name>Internal Snapshots</name>
 			<url>https://sbs.t-systems.com/nexus/content/repositories/tng-snapshots/</url>
 		</snapshotRepository>
-	</distributionManagement>-->
+	</distributionManagement>
 
 </project>

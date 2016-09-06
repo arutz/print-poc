@@ -44,3 +44,4 @@ workspace.xml
 .settings
 *.classpath
 /module-ejb/bin
+/.idea/scopes/scope_settings.xml

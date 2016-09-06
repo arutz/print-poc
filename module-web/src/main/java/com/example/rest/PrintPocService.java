@@ -30,9 +30,9 @@ public class PrintPocService {
 
     @POST
     @Path("addVehicle")
-    @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
-    public Vehicle addVehicle(Vehicle vehicle) {
+    public Vehicle addNewVehicle() {
+        Vehicle vehicle = new Vehicle();
         vehicleBusinessLogic.persist(vehicle);
         return vehicle;
     }
