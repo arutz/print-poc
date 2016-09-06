@@ -1,20 +1,29 @@
 package com.tsystems.drools;
 
+import org.drools.core.audit.WorkingMemoryConsoleLogger;
+import org.drools.core.event.DebugAgendaEventListener;
+import org.drools.core.event.DefaultAgendaEventListener;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
 import com.tsystems.tara.entities.Vehicle;
+import org.kie.internal.logger.KnowledgeRuntimeLogger;
+import org.kie.internal.logger.KnowledgeRuntimeLoggerFactory;
 
 public class DroolsTest {
 	
 	public static void main(String[]args) {
 		try {
             // load up the knowledge base
+            // setup the audit logging
+
+
             KieServices ks = KieServices.Factory.get();
             KieContainer kContainer = ks.getKieClasspathContainer();
             KieSession kSession = kContainer.newKieSession("ksession-rules");
- 
+            // setup the debug listeners
+            kSession.addEventListener( new CustomAgendaListener() );
             // go !
             Vehicle vehicle = new Vehicle();
             vehicle.setBmMotor("heavy");

@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.2.2">
+  <bpmn:message id="Message_0xry6bo" name="NewVehicle" />
+  <bpmn:error id="Error_0neh75d" name="VehicleInvalid" errorCode="E-VEH-INV" />
   <bpmn:process id="VehicleProtoType" name="VehicleProtoType" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_07fd1zq">
-      <bpmn:outgoing>SequenceFlow_1gfv1lj</bpmn:outgoing>
-      <bpmn:messageEventDefinition messageRef="Message_0xry6bo" />
-    </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1gfv1lj" sourceRef="StartEvent_07fd1zq" targetRef="Task_0s3dhvl" />
-    <bpmn:serviceTask id="Task_0s3dhvl" name="initial persist Vehicle" camunda:expression="${vehicleBusinessLogic.persistVehicle(execution)}">
-      <bpmn:documentation>Makes the Vehicle persitent, all subsequent changes will be persisted using the transaction started here.</bpmn:documentation>
-      <bpmn:incoming>SequenceFlow_1gfv1lj</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0ahzjp5</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0ahzjp5" sourceRef="Task_0s3dhvl" targetRef="Task_0mzu980" />
     <bpmn:businessRuleTask id="Task_0mzu980" name="Apply Rules" camunda:expression="${rulesEngine.applyRules(execution)}" camunda:resultVariable="rulesApplied">
       <bpmn:incoming>SequenceFlow_0ahzjp5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ohalue</bpmn:outgoing>
     </bpmn:businessRuleTask>
-    <bpmn:endEvent id="EndEvent_0s4n09y">
-      <bpmn:incoming>SequenceFlow_1rqdy03</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0ohalue" sourceRef="Task_0mzu980" targetRef="ExclusiveGateway_13rtv03" />
     <bpmn:serviceTask id="ServiceTask_0i6sp5u" name="commit Vehicle" camunda:expression="${vehicleBusinessLogic.persistVehicle(execution)}">
       <bpmn:incoming>SequenceFlow_0d6e4dg</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1rqdy03</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0gzanwc</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="ExclusiveGateway_13rtv03">
       <bpmn:incoming>SequenceFlow_0ohalue</bpmn:incoming>
@@ -33,64 +20,47 @@
       <bpmn:incoming>SequenceFlow_006euuf</bpmn:incoming>
       <bpmn:errorEventDefinition errorRef="Error_0neh75d" />
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1a0i5ja" name="{rulesApplied == 0}" sourceRef="ExclusiveGateway_13rtv03" targetRef="Task_16ecor2">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rulesApplied == 0}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1rqdy03" sourceRef="ServiceTask_0i6sp5u" targetRef="EndEvent_0s4n09y" />
-    <bpmn:sequenceFlow id="SequenceFlow_0d6e4dg" name="{rulesApplied &#62; 0}" sourceRef="ExclusiveGateway_13rtv03" targetRef="ServiceTask_0i6sp5u">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${rulesApplied > 0}]]></bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_006euuf" sourceRef="Task_16ecor2" targetRef="EndEvent_1lgmkln" />
     <bpmn:serviceTask id="Task_16ecor2" name="rollback vehicle" camunda:expression="${vehicleBusinessLogic.removeVehicle(execution)}">
       <bpmn:incoming>SequenceFlow_1a0i5ja</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_006euuf</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1cm3esa">
+      <bpmn:incoming>SequenceFlow_0gzanwc</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1ien0t7</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P1M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:startEvent id="StartEvent_07fd1zq">
+      <bpmn:outgoing>SequenceFlow_1gfv1lj</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0xry6bo" />
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_0s3dhvl" name="initial persist Vehicle" camunda:expression="${vehicleBusinessLogic.persistVehicle(execution)}">
+      <bpmn:documentation>Makes the Vehicle persitent, all subsequent changes will be persisted using the transaction started here.</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_1gfv1lj</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ahzjp5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0ohalue" sourceRef="Task_0mzu980" targetRef="ExclusiveGateway_13rtv03" />
+    <bpmn:sequenceFlow id="SequenceFlow_0d6e4dg" name="{rulesApplied &#62; 0}" sourceRef="ExclusiveGateway_13rtv03" targetRef="ServiceTask_0i6sp5u">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${rulesApplied > 0}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0gzanwc" sourceRef="ServiceTask_0i6sp5u" targetRef="IntermediateThrowEvent_1cm3esa" />
+    <bpmn:sequenceFlow id="SequenceFlow_1a0i5ja" name="{rulesApplied == 0}" sourceRef="ExclusiveGateway_13rtv03" targetRef="Task_16ecor2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rulesApplied == 0}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_006euuf" sourceRef="Task_16ecor2" targetRef="EndEvent_1lgmkln" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ahzjp5" sourceRef="Task_0s3dhvl" targetRef="Task_0mzu980" />
+    <bpmn:sequenceFlow id="SequenceFlow_1gfv1lj" sourceRef="StartEvent_07fd1zq" targetRef="Task_0s3dhvl" />
+    <bpmn:endEvent id="EndEvent_17afn0q">
+      <bpmn:incoming>SequenceFlow_1ien0t7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1ien0t7" sourceRef="IntermediateThrowEvent_1cm3esa" targetRef="EndEvent_17afn0q" />
   </bpmn:process>
-  <bpmn:message id="Message_0xry6bo" name="NewVehicle" />
-  <bpmn:error id="Error_0neh75d" name="VehicleInvalid" errorCode="E-VEH-INV" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="VehicleProtoType">
-      <bpmndi:BPMNShape id="StartEvent_0u8sqsm_di" bpmnElement="StartEvent_07fd1zq">
-        <dc:Bounds x="168" y="127" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="141" y="163" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1gfv1lj_di" bpmnElement="SequenceFlow_1gfv1lj">
-        <di:waypoint xsi:type="dc:Point" x="204" y="145" />
-        <di:waypoint xsi:type="dc:Point" x="314" y="145" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="214" y="120" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0iravco_di" bpmnElement="Task_0s3dhvl">
-        <dc:Bounds x="314" y="105" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0ahzjp5_di" bpmnElement="SequenceFlow_0ahzjp5">
-        <di:waypoint xsi:type="dc:Point" x="414" y="145" />
-        <di:waypoint xsi:type="dc:Point" x="537" y="145" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="430.5" y="120" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BusinessRuleTask_0zepb3w_di" bpmnElement="Task_0mzu980">
         <dc:Bounds x="537" y="105" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0s4n09y_di" bpmnElement="EndEvent_0s4n09y">
-        <dc:Bounds x="1147" y="127" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1120" y="163" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0ohalue_di" bpmnElement="SequenceFlow_0ohalue">
-        <di:waypoint xsi:type="dc:Point" x="637" y="145" />
-        <di:waypoint xsi:type="dc:Point" x="723" y="145" />
-        <di:waypoint xsi:type="dc:Point" x="723" y="145" />
-        <di:waypoint xsi:type="dc:Point" x="758" y="145" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="693" y="135" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0i6sp5u_di" bpmnElement="ServiceTask_0i6sp5u">
         <dc:Bounds x="964" y="105" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -106,20 +76,38 @@
           <dc:Bounds x="738" y="448" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0kxaphp_di" bpmnElement="Task_16ecor2">
+        <dc:Bounds x="733" y="263" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1utrgkq_di" bpmnElement="IntermediateThrowEvent_1cm3esa">
+        <dc:Bounds x="1157" y="127" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1130" y="163" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0u8sqsm_di" bpmnElement="StartEvent_07fd1zq">
+        <dc:Bounds x="168" y="127" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="141" y="163" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0iravco_di" bpmnElement="Task_0s3dhvl">
+        <dc:Bounds x="314" y="105" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ohalue_di" bpmnElement="SequenceFlow_0ohalue">
+        <di:waypoint xsi:type="dc:Point" x="637" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="723" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="723" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="758" y="145" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="693" y="135" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1a0i5ja_di" bpmnElement="SequenceFlow_1a0i5ja">
         <di:waypoint xsi:type="dc:Point" x="783" y="170" />
         <di:waypoint xsi:type="dc:Point" x="783" y="263" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="785.8125" y="206.18855267309183" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1rqdy03_di" bpmnElement="SequenceFlow_1rqdy03">
-        <di:waypoint xsi:type="dc:Point" x="1064" y="145" />
-        <di:waypoint xsi:type="dc:Point" x="1108" y="145" />
-        <di:waypoint xsi:type="dc:Point" x="1108" y="145" />
-        <di:waypoint xsi:type="dc:Point" x="1147" y="145" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1078" y="135" width="90" height="20" />
+          <dc:Bounds x="786" y="206" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0d6e4dg_di" bpmnElement="SequenceFlow_0d6e4dg">
@@ -133,12 +121,43 @@
         <di:waypoint xsi:type="dc:Point" x="783" y="343" />
         <di:waypoint xsi:type="dc:Point" x="783" y="412" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="753" y="367.5" width="90" height="20" />
+          <dc:Bounds x="753" y="368" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0kxaphp_di" bpmnElement="Task_16ecor2">
-        <dc:Bounds x="733" y="263" width="100" height="80" />
+      <bpmndi:BPMNEdge id="SequenceFlow_0gzanwc_di" bpmnElement="SequenceFlow_0gzanwc">
+        <di:waypoint xsi:type="dc:Point" x="1064" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="1157" y="145" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1065.5" y="120" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ahzjp5_di" bpmnElement="SequenceFlow_0ahzjp5">
+        <di:waypoint xsi:type="dc:Point" x="414" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="537" y="145" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="430.5" y="120" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1gfv1lj_di" bpmnElement="SequenceFlow_1gfv1lj">
+        <di:waypoint xsi:type="dc:Point" x="204" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="314" y="145" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="214" y="120" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_17afn0q_di" bpmnElement="EndEvent_17afn0q">
+        <dc:Bounds x="1262" y="127" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1235" y="163" width="90" height="20" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ien0t7_di" bpmnElement="SequenceFlow_1ien0t7">
+        <di:waypoint xsi:type="dc:Point" x="1193" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="1262" y="145" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1182.5" y="120" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

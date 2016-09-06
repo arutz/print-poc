@@ -45,3 +45,4 @@ workspace.xml
 *.classpath
 /module-ejb/bin
 /.idea/scopes/scope_settings.xml
+/target/MANIFEST.MF
