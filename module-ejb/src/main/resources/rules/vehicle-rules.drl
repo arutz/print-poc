@@ -3,46 +3,55 @@ package rules
 import com.tsystems.tara.entities.Vehicle;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 dialect "java" 
+rule "isInValid" salience 10 // will get evaluated before other rules since it has a higher saliance than default (0)
+	when
+		$vehicle : Vehicle( objectId == 0 && id == 0 )
+	then
+		$vehicle.setValid(false);
+		// the retract will cause all rules which opperate on $vehicle to not fire any longer
+		retract( $vehicle );
+end
+rule "isValid" salience 10 // will get evaluated before other rules since it has a higher saliance than default (0)
+	when
+		$vehicle : Vehicle( objectId != 0 || id != 0 )
+	then
+		$vehicle.setValid(true);
+end
 rule "heavyMotor"
     when
         $vehicle : Vehicle( bmMotor == "heavy" );
     then
         $vehicle.setMassTire1($vehicle.getMassTire1() + 1.0f);
         $vehicle.setMassTire2($vehicle.getMassTire2() + 1.0f);
-        insert( $vehicle );
-        return;
 end
 rule "ClassficationA"
     when
         $vehicle : Vehicle( bmVehicle  matches "A.*?" );
-        $execution : DelegateExecution(  );
     then
         $vehicle.setType("A");
-        insert($vehicle);
-        return;
 end
 rule "ClassficationB"
     when
         $vehicle : Vehicle( bmVehicle  matches "B.*?" )
     then
         $vehicle.setType("B");
-        insert($vehicle);
-        return;
 end
 rule "ClassficationC"
     when
         $vehicle : Vehicle( bmVehicle  matches "C.*?" )
     then
         $vehicle.setType("C");
-        insert($vehicle);
-        return;
 end
 rule "ClassficationD"
     when
         $vehicle : Vehicle( bmVehicle  matches "D.*?" )
     then
         $vehicle.setType("D");
-        insert($vehicle);
-        return;
+end
+rule "cocInitialized"
+    when
+        $vehicle : Vehicle( cocState in ( 1, 2, 3 ) )
+    then
+        $vehicle.setMass($vehicle.getMassTire1() + $vehicle.getMassTire2() + 1.0f);
 end
 

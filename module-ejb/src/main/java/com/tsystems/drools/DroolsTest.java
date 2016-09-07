@@ -23,13 +23,16 @@ public class DroolsTest {
             KieContainer kContainer = ks.getKieClasspathContainer();
             KieSession kSession = kContainer.newKieSession("ksession-rules");
             // go !
+            kSession.addEventListener(new CustomAgendaListener());
             Vehicle vehicle = new Vehicle();
             vehicle.setBmVehicle("Astra");
             vehicle.setBmMotor("heavy");
             vehicle.setMassTire1(1.0f);
             vehicle.setMassTire2(1.0f);
+            vehicle.setCocState(1);
+            vehicle.setObjectId(0);
+            vehicle.setId(1);
             kSession.insert(vehicle);
-            System.out.println("facts:" + kSession.getFactHandles().size());
             int rulesApplied = kSession.fireAllRules();
             System.out.println("all rules should be applied! rules applied: " + rulesApplied);
             System.out.println(vehicle.toString());

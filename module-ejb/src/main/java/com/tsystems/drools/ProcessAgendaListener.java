@@ -30,15 +30,12 @@ public class ProcessAgendaListener extends DefaultAgendaEventListener {
 
     private static Logger log = Logger.getLogger(ProcessAgendaListener.class.getName());
 
-    private List<Activation> activationList = new ArrayList<>();
-
     @Override
     public void afterMatchFired(AfterMatchFiredEvent event) {
         Rule rule = event.getMatch().getRule();
         String ruleName = rule.getName();
         Map<String, Object> ruleMetaDataMap = rule.getMetaData();
         StringBuilder sb = new StringBuilder("Rule fired: " + ruleName);
-
         if (ruleMetaDataMap.size() > 0) {
             sb.append("\n  With [" + ruleMetaDataMap.size() + "] meta-data:");
             for (String key : ruleMetaDataMap.keySet()) {
@@ -46,7 +43,6 @@ public class ProcessAgendaListener extends DefaultAgendaEventListener {
                         + ruleMetaDataMap.get(key));
             }
         }
-
         AppliedRuleEntry entry = new AppliedRuleEntry();
         entry.setProcessExecutionElementId(processExecutionElementId);
         entry.setProcessExecutionId(processExecutionId);
@@ -55,4 +51,6 @@ public class ProcessAgendaListener extends DefaultAgendaEventListener {
         entry.setContextInfo(sb.toString());
         entityManager.persist(entry);
     }
+    
+    
 }

@@ -46,8 +46,24 @@ public class Vehicle {
     private float massTire2;
     private String countryCode;
     private String engineSerial;
+    /* this field demonstrates computed / non persistent entity fields that are only relevant for rules execution
+    and process execution but are not stored in the database */
+    @Transient
+    private boolean valid; 
 
-    public Vehicle() {
+    public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+
+	public Vehicle() {
+		// assume invalid state as default
+		this.valid = false;
+		// assume objectId = 0 as default state
+		this.objectId = 0;
     }
 
     public long getId() {

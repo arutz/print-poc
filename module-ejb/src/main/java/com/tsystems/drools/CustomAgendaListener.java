@@ -28,8 +28,6 @@ public class CustomAgendaListener extends DefaultAgendaEventListener {
 
     private static Logger log = Logger.getLogger(CustomAgendaListener.class.getName());
 
-    private List<Activation> activationList = new ArrayList<>();
-
     @Override
     public void afterMatchFired(AfterMatchFiredEvent event) {
         super.afterMatchFired(event);

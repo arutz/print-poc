@@ -45,16 +45,17 @@ public class RulesBusinesLogic {
     public void init() {
         ks = KieServices.Factory.get();
         kContainer = ks.getKieClasspathContainer();
-        kSession = kContainer.newKieSession("ksession-rules");
     }
 
     public int applyRules(DelegateExecution delegateExecution){
+    	kSession = kContainer.newKieSession("ksession-rules");
         Vehicle vehicle = (Vehicle) delegateExecution.getVariable(Vehicle.PROP_NAME);
         ProcessAgendaListener agendaListener = new ProcessAgendaListener(
         		delegateExecution.getActivityInstanceId(),
         		delegateExecution.getCurrentActivityName(), entityManager);
         kSession.addEventListener(agendaListener);
         kSession.insert(vehicle);
+        kSession.insert(delegateExecution);
         int appliedRules = kSession.fireAllRules();
         logger.info(MessageFormat.format("applied {0} rules for process instance {1}"
                 ,appliedRules,delegateExecution.getParentId()));
