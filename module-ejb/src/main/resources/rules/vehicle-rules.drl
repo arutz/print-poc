@@ -1,11 +1,46 @@
 package rules
  
 import com.tsystems.tara.entities.Vehicle;
+dialect "java" 
 rule "heavyMotor"
     when
         $vehicle : Vehicle( bmMotor == "heavy" );
     then
         $vehicle.setMassTire1($vehicle.getMassTire1() + 1.0f);
         $vehicle.setMassTire2($vehicle.getMassTire2() + 1.0f);
+        insert( $vehicle );
         return;
 end
+rule "ClassficationA"
+    when
+        $vehicle : Vehicle( bmVehicle  matches "A.*?" )
+    then
+        $vehicle.setType("A");
+        insert($vehicle);
+        return;
+end
+rule "ClassficationB"
+    when
+        $vehicle : Vehicle( bmVehicle  matches "B.*?" )
+    then
+        $vehicle.setType("B");
+        insert($vehicle);
+        return;
+end
+rule "ClassficationC"
+    when
+        $vehicle : Vehicle( bmVehicle  matches "C.*?" )
+    then
+        $vehicle.setType("C");
+        insert($vehicle);
+        return;
+end
+rule "ClassficationD"
+    when
+        $vehicle : Vehicle( bmVehicle  matches "D.*?" )
+    then
+        $vehicle.setType("D");
+        insert($vehicle);
+        return;
+end
+

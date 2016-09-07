@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn11.xsd" id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="decision" name="Vehicle.CountryCode">
+    <decisionTable id="decisionTable">
+      <input id="input1" label="String">
+        <inputExpression id="inputExpression1" typeRef="string">        <text>vehicle.countryCode</text>
+</inputExpression>
+      </input>
+      <output id="output1" label="String" name="vehicle.codeLack" typeRef="string" />
+      <rule id="row-424789251-1">
+        <inputEntry id="UnaryTests_0qkwwdc">        <text>de</text>
+</inputEntry>
+        <outputEntry id="LiteralExpression_0vzbtqu">        <text>DE</text>
+</outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

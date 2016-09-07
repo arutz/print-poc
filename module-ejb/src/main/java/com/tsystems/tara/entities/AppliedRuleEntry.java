@@ -20,7 +20,9 @@ public class AppliedRuleEntry {
     private String processExecutionId;
     private String processExecutionElementId;
     private String ruleName;
+    @Lob
     private String input;
+    @Lob
     private String contextInfo;
 
     public int getId() {

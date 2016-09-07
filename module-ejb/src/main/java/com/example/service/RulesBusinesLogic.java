@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.tsystems.drools.ProcessAgendaListener;
 import com.tsystems.tara.entities.Vehicle;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.kie.api.KieServices;
@@ -18,6 +19,9 @@ import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +32,9 @@ import java.util.concurrent.TimeUnit;
 @Named(value = "rulesEngine")
 public class RulesBusinesLogic {
 
+	@PersistenceContext(name = "primary")
+    public EntityManager entityManager;
+	
     private Logger logger = LoggerFactory.getLogger(RulesBusinesLogic.class);
 
     private KieServices ks;
@@ -43,6 +50,10 @@ public class RulesBusinesLogic {
 
     public int applyRules(DelegateExecution delegateExecution){
         Vehicle vehicle = (Vehicle) delegateExecution.getVariable(Vehicle.PROP_NAME);
+        ProcessAgendaListener agendaListener = new ProcessAgendaListener(
+        		delegateExecution.getActivityInstanceId(),
+        		delegateExecution.getCurrentActivityName(), entityManager);
+        kSession.addEventListener(agendaListener);
         kSession.insert(vehicle);
         int appliedRules = kSession.fireAllRules();
         logger.info(MessageFormat.format("applied {0} rules for process instance {1}"

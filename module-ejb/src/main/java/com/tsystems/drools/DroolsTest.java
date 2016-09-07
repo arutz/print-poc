@@ -22,10 +22,9 @@ public class DroolsTest {
             KieServices ks = KieServices.Factory.get();
             KieContainer kContainer = ks.getKieClasspathContainer();
             KieSession kSession = kContainer.newKieSession("ksession-rules");
-            // setup the debug listeners
-            kSession.addEventListener( new CustomAgendaListener() );
             // go !
             Vehicle vehicle = new Vehicle();
+            vehicle.setBmVehicle("Astra");
             vehicle.setBmMotor("heavy");
             vehicle.setMassTire1(1.0f);
             vehicle.setMassTire2(1.0f);
