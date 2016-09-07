@@ -6,6 +6,11 @@
     <bpmn:businessRuleTask id="Task_0mzu980" name="Apply Rules" camunda:expression="${rulesEngine.applyRules(execution)}" camunda:resultVariable="rulesApplied">
       <bpmn:incoming>SequenceFlow_0ahzjp5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ohalue</bpmn:outgoing>
+      <bpmn:property id="Property_1yilb9b" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0e9nysp">
+        <bpmn:sourceRef>DataObjectReference_1uyci3q</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1yilb9b</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:businessRuleTask>
     <bpmn:serviceTask id="ServiceTask_0i6sp5u" name="commit Vehicle" camunda:expression="${vehicleBusinessLogic.persistVehicle(execution)}">
       <bpmn:incoming>SequenceFlow_0jrn5ko</bpmn:incoming>
@@ -40,6 +45,11 @@
       <bpmn:documentation>Makes the Vehicle persitent, all subsequent changes will be persisted using the transaction started here.</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_1gfv1lj</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ahzjp5</bpmn:outgoing>
+      <bpmn:property id="Property_1n3kxze" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1csaokb">
+        <bpmn:sourceRef>DataObjectReference_0lzxn2k</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1n3kxze</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_0ohalue" sourceRef="Task_0mzu980" targetRef="ExclusiveGateway_13rtv03" />
     <bpmn:sequenceFlow id="SequenceFlow_0d6e4dg" name="{rulesApplied &#62; 0}" sourceRef="ExclusiveGateway_13rtv03" targetRef="ExclusiveGateway_091dnco">
@@ -72,6 +82,10 @@
       <bpmn:outgoing>SequenceFlow_0g35is8</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_0g35is8" sourceRef="Task_1cnhu4d" targetRef="ServiceTask_0i6sp5u" />
+    <bpmn:dataObjectReference id="DataObjectReference_0lzxn2k" name="Vehicle (variable name = vehicle)" dataObjectRef="DataObject_1n2s2i9" />
+    <bpmn:dataObject id="DataObject_1n2s2i9" />
+    <bpmn:dataObjectReference id="DataObjectReference_1uyci3q" name="int (variable name = rulesApplied)" dataObjectRef="DataObject_14oqufb" />
+    <bpmn:dataObject id="DataObject_14oqufb" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="VehicleProtoType">
@@ -206,6 +220,26 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1248" y="120" width="90" height="20" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_0lzxn2k_di" bpmnElement="DataObjectReference_0lzxn2k">
+        <dc:Bounds x="346" y="-2" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="409" y="13" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1csaokb_di" bpmnElement="DataInputAssociation_1csaokb">
+        <di:waypoint xsi:type="dc:Point" x="363" y="48" />
+        <di:waypoint xsi:type="dc:Point" x="361" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_1uyci3q_di" bpmnElement="DataObjectReference_1uyci3q">
+        <dc:Bounds x="569" y="-2" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="624" y="13" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0e9nysp_di" bpmnElement="DataInputAssociation_0e9nysp">
+        <di:waypoint xsi:type="dc:Point" x="589" y="48" />
+        <di:waypoint xsi:type="dc:Point" x="593" y="105" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

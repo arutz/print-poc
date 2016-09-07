@@ -1,6 +1,7 @@
 package rules
  
 import com.tsystems.tara.entities.Vehicle;
+import org.camunda.bpm.engine.delegate.DelegateExecution;
 dialect "java" 
 rule "heavyMotor"
     when
@@ -13,7 +14,8 @@ rule "heavyMotor"
 end
 rule "ClassficationA"
     when
-        $vehicle : Vehicle( bmVehicle  matches "A.*?" )
+        $vehicle : Vehicle( bmVehicle  matches "A.*?" );
+        $execution : DelegateExecution(  );
     then
         $vehicle.setType("A");
         insert($vehicle);
